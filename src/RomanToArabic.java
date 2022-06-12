@@ -88,22 +88,6 @@ public class RomanToArabic {
         return input.charAt(0) == input.charAt(1) && input.charAt(0) == input.charAt(2);
     }
 
-    private static boolean thereIsASubtract(String input, HashMap<Character, Integer> dictionary) {
-        for (int i = 0; i < input.length(); i++) {
-            for (int j = i; j < input.length(); j++) {
-                System.out.println(dictionary.get(input.charAt(i)));
-                System.out.println(dictionary.get(input.charAt(j)));
-                System.out.println(dictionary.get(input.charAt(i)) < dictionary.get(input.charAt(j)));
-                System.out.println();
-                if (dictionary.get(input.charAt(i)) < dictionary.get(input.charAt(j))) {
-                    return true;
-                }
-            }
-        }
-
-        return false;
-    }
-
     private static boolean hasValidStructure(String str) {
         return hasValidRomanNumberCharacters(str) && numbersAreCorrectlyRepeated(str);
     }

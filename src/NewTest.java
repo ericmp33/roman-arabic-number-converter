@@ -1,6 +1,4 @@
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -67,51 +65,87 @@ import java.util.Map;
  */
 
 public class NewTest {
-    public static final Map<Character, Integer> dictionary = new HashMap<>() {{
-        put('I', 1);
-        put('V', 5);
-        put('X', 10);
-        put('L', 50);
-        put('C', 100);
-        put('D', 500);
-        put('M', 1000);
-    }};
+    public static final Map<Character, Integer> dictionary = Map.of(
+        'I', 1,
+        'V', 5,
+        'X', 10,
+        'L', 50,
+        'C', 100,
+        'D', 500,
+        'M', 1000
+    );
 
     public static void main(String[] args) {
-        String input = "mdlxxix".toUpperCase();
+        // get input
+        String input = "MMCMXCIX".trim().toUpperCase();
 
+        // validate input
+        if (! isValidRomanNumber(input)) {
+            System.out.println("invalid Roman number");
+            return;
+        }
+
+        // convert each Roman number to integer and store it in an array (but reversed)
         ArrayList<Integer> integers = new ArrayList<>();
 
         for (int i = input.length() - 1; i >= 0; i--) {
             integers.add(dictionary.get(input.charAt(i)));
         }
 
-        System.out.println(Arrays.toString(integers.toArray()));
-
-        var output = integers.get(0);
-        var test = String.valueOf(integers.get(0));
+        // build the output
+        int output = integers.get(0);
+        StringBuilder outputTest = new StringBuilder(String.valueOf(integers.get(0)));
 
         for (int i = 0; i < integers.size() - 1; i++) {
             int current = integers.get(i);
             int next = integers.get(i + 1);
 
+            // if current number is greater than next one, subtract, otherwise, sum
             if (current > next) {
-                test += " - " + next;
-                output += (- next);
+                outputTest.append(" - ").append(next);
+                output -= next;
             } else {
-                test += " + " +  next;
+                outputTest.append(" + ").append(next);
                 output += next;
-
             }
-
-            System.out.println("current       : " + current);
-            System.out.println("next          : " + next);
-            System.out.println("current < next: " + (current < next));
-            System.out.println("output        : " + output);
-            System.out.println();
         }
 
-        System.out.println("output        : " + output);
-        System.out.println("test          : " + test);
+        System.out.println(outputTest);
+        System.out.println(output);
+    }
+
+    // returns true if parsed String is a valid Roman number
+    private static boolean isValidRomanNumber(String str) {
+        return charactersAreRepeatedLessThanFourTimes(str) && isComposedByRomanNumbers(str);
+    }
+
+    // returns true if parsed String is only composed by roman numbers
+    private static boolean isComposedByRomanNumbers(String str) {
+        for (int i = 0; i < str.length(); i++) {
+            if (! dictionary.containsKey(str.charAt(i))) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    // returns true if parsed String's characters are repeated less than 4 times in the String itself
+    private static boolean charactersAreRepeatedLessThanFourTimes(String str) {
+        for (int i = 0; i < str.length(); i++) {
+            var count = 0;
+
+            for (int j = 0; j < str.length(); j++) {
+                if (str.charAt(i) == str.charAt(j)) {
+                    count++;
+                }
+            }
+
+            if (count > 3) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }
