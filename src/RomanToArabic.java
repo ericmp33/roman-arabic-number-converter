@@ -1,112 +1,130 @@
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * algorithm:
+ *
+ * i first started from right to left, just adding the numbers and checking if next number was negative
+ *
+ * actually was the other way:
+ *
+ * steps:
+ *
+ * 1- convert character to integer
+ * 2- store integers in array
+ * 3- reverse the array
+ * 4- sum if current number is greater than next one, otherwise, subtract
+ *
+ * example:
+ *
+ * MMCXLII
+ *
+ * 1 + (1 (current number) is greater than 1 (next number)? false => sum)
+ * 1 + (1 (current number) is greater than 50 (next number)? false => sum)
+ * 50 + (50 (current number) is equal or greater than 10 (next number)? false => subtract)
+ * 10 - (10 (current number) is equal or greater than 100 (next number)? false => subtract)
+ * 100 +
+ * 1000 +
+ * 1000
+ *
+ * without comments:
+ * MMCXLII
+ *
+ * 1 +
+ * 1 +
+ * 50 +
+ * 10 -
+ * 100 +
+ * 1000 +
+ * 1000
+ *
+ * another example:
+ * MMCCXIV
+ *
+ * 5 -
+ * 1 +
+ * 10 +
+ * 100 +
+ * 100 +
+ * 1000 +
+ * 1000
+ *
+ * another example
+ *
+ * mdlxxix
+ *
+ * 10 -
+ * 1 +
+ * 10 +
+ * 10 +
+ * 50 +
+ * 500 +
+ * 1000
+ *
+ * 5- finally, build it up and print it
+ */
+
 public class RomanToArabic {
+    public static final Map<Character, Integer> dictionary = Map.of(
+        'I', 1,
+        'V', 5,
+        'X', 10,
+        'L', 50,
+        'C', 100,
+        'D', 500,
+        'M', 1000
+    );
+
     public static void main(String[] args) {
-        Map<Character, Integer> dictionary = new HashMap<Character, Integer>() {{
-            put('I', 1);
-            put('V', 5);
-            put('X', 10);
-            put('L', 50);
-            put('C', 100);
-            put('D', 500);
-            put('M', 1000);
-        }};
+        // get input
+        String input = "CDXLIV".trim().toUpperCase();
 
-        // System.out.println(dictionary.get('C'));
-        // System.out.println(dictionary.containsKey('C'));
-        // System.out.println(dictionary.containsValue(10));
+        // todo - casos a controlar - iix, XXC
 
-        var input = "ix".toUpperCase();
-
-        if (!hasValidStructure(input)) {
-            System.out.println("Invalid structure");
+        // validate input
+        if (! isValidRomanNumber(input)) {
+            System.out.println("invalid Roman number");
             return;
         }
 
-        String output = "unhandled case";
+        // convert each Roman number to integer and store it in an array (but reversed)
+        ArrayList<Integer> integers = new ArrayList<>();
 
-        if (input.length() == 1) {
-            var character = input.charAt(0);
-
-            if (dictionary.containsKey(character)) {
-                output = dictionary.get(character).toString();
-            }
-        } else if (input.length() == 3 && allCharactersAreTheSame(input)) {
-            output = String.valueOf(dictionary.get(input.charAt(0)) * 3);
-        } else {
-            // if any of chars is greater than last one, means there is a subtract
-            //if (thereIsASubtract(input, dictionary)) {
-              //  System.out.println("subtract");
-                //return;
-            //}
-
-            /**
-             * read numbers:
-             *
-             * example:
-             *
-             * 1000
-             * 1000
-             * 100
-             * 1000
-             * 10
-             * 1
-             * 5
-             *
-             * is 2914
-             */
-
-//            example:
-//1000
-//1000
-//100
-//1000
-//10
-//1
-//5
-
-
-
-            var numbers = new ArrayList<Integer>();
-
-            int finalNum = 0;
-
-            for (int i = 0; i < input.length(); i++) {
-                numbers.add(dictionary.get(input.charAt(i)));
-                finalNum += numbers.get(i);
-            }
-
-            output = String.valueOf(finalNum);
+        for (int i = input.length() - 1; i >= 0; i--) {
+            integers.add(dictionary.get(input.charAt(i)));
         }
 
+        // build the output
+        int output = integers.get(0);
+        StringBuilder outputTest = new StringBuilder(String.valueOf(integers.get(0)));
+
+        for (int i = 0; i < integers.size() - 1; i++) {
+            int current = integers.get(i);
+            int next = integers.get(i + 1);
+
+            // if current number is greater than next one, subtract, otherwise, sum
+            if (current > next) {
+                outputTest.append(" - ").append(next);
+                output -= next;
+            } else {
+                outputTest.append(" + ").append(next);
+                output += next;
+            }
+        }
+
+        System.out.println(outputTest);
         System.out.println(output);
     }
 
-    private static boolean allCharactersAreTheSame(String input) {
-        return input.charAt(0) == input.charAt(1) && input.charAt(0) == input.charAt(2);
-    }
-
-    private static boolean hasValidStructure(String str) {
-        return hasValidRomanNumberCharacters(str) && numbersAreCorrectlyRepeated(str);
+    // returns true if parsed String is a valid Roman number
+    private static boolean isValidRomanNumber(String str) {
+        return charactersAreRepeatedLessThanFourTimes(str) && isComposedByRomanNumbers(str);
     }
 
     // returns true if parsed String is only composed by roman numbers
-    private static boolean hasValidRomanNumberCharacters(String str) {
-        char[] validChars = { 'I', 'V', 'X', 'D', 'C', 'L', 'M' };
-
+    private static boolean isComposedByRomanNumbers(String str) {
         for (int i = 0; i < str.length(); i++) {
-            var count = 0;
-
-            for (int j = 0; j < validChars.length; j++) {
-                if (str.charAt(i) == validChars[j]) {
-                    count++;
-                    break;
-                }
-            }
-
-            if (count == 0) {
+            if (! dictionary.containsKey(str.charAt(i))) {
                 return false;
             }
         }
@@ -114,17 +132,10 @@ public class RomanToArabic {
         return true;
     }
 
-    private static boolean numbersAreCorrectlyRepeated(String str) {
-        var checkedChars = new ArrayList<Character>();
-
+    // returns true if parsed String's characters are repeated less than 4 times in the String itself
+    private static boolean charactersAreRepeatedLessThanFourTimes(String str) {
         for (int i = 0; i < str.length(); i++) {
             var count = 0;
-
-            if (checkedChars.contains(str.charAt(i))) {
-                break;
-            } else {
-                checkedChars.add(str.charAt(i));
-            }
 
             for (int j = 0; j < str.length(); j++) {
                 if (str.charAt(i) == str.charAt(j)) {
