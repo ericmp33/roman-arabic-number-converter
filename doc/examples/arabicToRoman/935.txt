@@ -1,0 +1,67 @@
+935
+
+0- validar que el número introduït sigui un valor enter vàlid i estigui entre 1 i 1000 (inclosos). trim, i treure 0s a l'esquerra
+
+1- dividir números
+
+900
+30
+5
+
+2- buscar dins de quin rang està cada número
+
+900 -> entre 500 i 1000
+30  -> entre 10 i 50
+5   -> número preparat per ser convertit, sense rang
+
+3- obtenir els 1rs caràcters de cada número
+900 -> 9
+30  -> 3
+5   -> 5
+
+4- assignar cada número al rang inferior o superior (tots son assignats al rang inferior menys el 4x i el 9x, els quals son generats restant, i van al rang superior)
+900 -> 1000
+30  -> 10
+5   -> 5 (no)
+
+5- si son números assignats al rang inferior
+    5.1- fer el càlcul per repetir els caràcters n cops
+        30 -> 3 - 1 = 2 cops a ser repetit
+
+    5.2- agafar el número de rang inferior i convertir-lo a número Romà
+        30 -> 10 -> X
+
+        5.2.1- si el número no és 3x ni 2x, obtenir següent número inferior
+            -
+
+            5.2.1.1- repetir els següents números inferiors n cops
+                -
+
+        5.2.2- si no, repetir el número n cops
+            X * 3 = XXX
+
+        5.5- ajuntar-ho
+            XXX = XXX
+
+6- si son números assignats al rang superior
+    6.1- obtenir el rang superior
+        900   -> 1000
+
+    6.2- fer el càlcul pels de rang superior
+        6.2.1- convertir el número de rang superior
+            1000 -> M
+
+        6.2.2- restar rang superior - el número en qüestió
+            1000 - 900 = 100
+
+        6.2.3- convertir resta a número romà
+            100 -> C
+
+        6.2.4- ajuntar números convertits (rotats)
+            CM
+
+7-ajuntar-ho tot
+    CM XXX V
+    900 30  5
+
+    CMXXXV

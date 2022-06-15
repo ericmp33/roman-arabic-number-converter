@@ -1,0 +1,55 @@
+190
+
+0- validar que el número introduït sigui un valor enter vàlid i estigui entre 1 i 1000 (inclosos). trim, i treure 0s a l'esquerra
+
+1- dividir números
+
+100
+90
+0
+
+2- buscar dins de quin rang està cada número
+
+100 -> número preparat per ser convertit, sense rang
+90  -> entre 50 i 100
+0   -> sense rang
+
+3- obtenir els 1rs caràcters de cada número, només guardar-los si son > 0
+100 -> 1
+90  -> 9
+0   -> 0 (no)
+
+4- assignar cada número al rang inferior o superior (tots son assignats al rang inferior menys el 4x i el 9x, els quals son generats restant, i van al rang superior)
+100 -> 100 (no)
+90  -> 100
+0   -> 0 (no)
+
+5- si son números assignats al rang inferior
+    5.1- fer el càlcul per repetir els caràcters n cops
+        100 -> (no)
+
+    5.2- agafar el número de rang inferior i convertir-lo a número Romà
+        100 -> C
+
+6- si son números assignats al rang superior
+    6.1- obtenir el rang superior
+        90   -> 100
+
+    6.2- fer el càlcul pels de rang superior
+        6.2.1- convertir el número de rang superior
+            100 -> C
+
+        6.2.2- restar rang superior - el número en qüestió
+            100 - 90 = 10
+
+        6.2.3- convertir resta a número romà
+            10 -> X
+
+        6.2.4- ajuntar números convertits (rotats)
+            XC
+
+7-ajuntar-ho tot
+    C   XC   -
+    100 90   0
+
+    CXC

@@ -1,0 +1,58 @@
+333
+
+0- validar que el número introduït sigui un valor enter vàlid i estigui entre 1 i 1000 (inclosos). trim, i treure 0s a l'esquerra
+
+1- dividir números
+
+300
+30
+3
+
+2- buscar dins de quin rang està cada número
+
+300 -> entre 100 i 500
+30  -> entre 10 i 50
+3   -> entre 1 i 5
+
+3- obtenir els 1rs caràcters de cada número
+300 -> 3
+30  -> 3
+3   -> 3
+
+4- assignar cada número al rang inferior o superior (tots son assignats al rang inferior menys el 4 i el 9, els quals son generats restant, i van al rang superior)
+300 -> 100
+30  -> 10
+3   -> 1
+
+5- si son números assignats al rang inferior
+    5.1- fer el càlcul per repetir els caràcters n cops
+        300 -> 3 - 1 = 2 cops a ser repetit
+        30  -> 3 - 1 = 2 cops a ser repetit
+        8   -> 3 - 1 = 2 cops a ser repetit
+
+    5.2- agafar el número de rang inferior i convertir-lo a número Romà
+        300 -> 100 -> C
+        30  -> 10  -> X
+        3   -> 1   -> I
+
+        5.2.1- si el número no és 3x ni 2x, obtenir següent número inferior
+            -
+
+    5.2.2- si no, repetir el número n cops
+        C * 3 = CCC
+        X * 3 = XXX
+        I * 3 = III
+
+    5.5- ajuntar-ho
+        CCC = CCC
+        XXX = XXX
+        III = III
+
+6- si son números assignats al rang superior
+    -
+
+7-ajuntar-ho tot
+    CCC   XXX  III
+    300   30   3 
+
+    CCCXXXIII

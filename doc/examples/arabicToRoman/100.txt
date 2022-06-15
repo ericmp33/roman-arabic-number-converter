@@ -1,0 +1,13 @@
+100
+
+0- validar que el número introduït sigui un valor enter vàlid i estigui entre 1 i 1000 (inclosos). trim, i treure 0s a l'esquerra
+
+1- dividir números
+
+100
+
+2- buscar dins de quin rang està cada número
+
+100 -> no està dins de cap rang, és un número que està entre rang i rang
+
+* si la longitud dels números dividits és 1 i el número pot ser trobat directament al diccionari, mostrar-lo
