@@ -64,7 +64,7 @@ import java.util.Map;
  * 5- finally, build it up and print it
  */
 
-public class RomanicToArabic {
+public class RomanToArabic {
     public static final Map<Character, Integer> dictionary = Map.of(
         'I', 1,
         'V', 5,
