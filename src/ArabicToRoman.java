@@ -15,9 +15,8 @@ public class ArabicToRoman {
     );
 
     public static void main(String[] args) {
-        var input = "268";
+        var input = "740";
         System.out.println("Input: " + input);
-        System.out.println();
 
         // todo - check it's a valid integer and between 1 and 1000
 
@@ -53,6 +52,7 @@ public class ArabicToRoman {
                 var numRange = getNumRange(num, firstNumDigit);
                 var firstNumRangeDigit = Integer.parseInt(String.valueOf(numRange.toString().charAt(0)));
 
+                // handle lower ranges
                 if (numTypeRange.equals("lower")) {
                     var timesToBeRepeated = firstNumDigit - firstNumRangeDigit;
 
@@ -76,19 +76,27 @@ public class ArabicToRoman {
 
                         convertedNums.add(numRangeAsRomanRepeated);
                     }
+                }
 
-                    // put it together
+                // handle upper ranges
+                else {
+                    // convert upper range
+                    var numRangeAsRoman = dictionary.get(numRange);
 
-                } else {
+                    var subtract = numRange - num;
 
+                    var subtractAsRoman = dictionary.get(subtract);
+
+                    var numAsRoman = subtractAsRoman.toString() + numRangeAsRoman.toString();
+
+                    convertedNums.add(numAsRoman);
                 }
             } else {
                 convertedNums.add(String.valueOf(dictionary.get(num)));
             }
         }
 
-        System.out.println(convertedNums);
-
+        System.out.print("Output: ");
         convertedNums.forEach(System.out::print);
         System.out.println();
     }
