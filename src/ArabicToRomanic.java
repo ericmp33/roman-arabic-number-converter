@@ -3,7 +3,7 @@ import java.util.Map;
 
 import static java.util.Map.entry;
 
-public class ArabicToRoman {
+public class ArabicToRomanic {
     public static final Map<Integer, Character> dictionary = Map.ofEntries(
         entry(1, 'I'),
         entry(5, 'V'),
