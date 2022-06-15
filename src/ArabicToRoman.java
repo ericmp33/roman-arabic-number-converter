@@ -1,169 +1,166 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Map;
 
-public class ArabicToRoman {
-    public static final Map<Integer, Character> dictionary = Map.of(
-        1, 'I',
-        5, 'V',
-        10, 'X',
-        50, 'L',
-        100, 'C',
-        500, 'D',
-        1000, 'M'
-    );
+import static java.util.Map.entry;
 
-    public static final Map<Character, Integer> romanToArabic = Map.of(
-        'I', 1,
-        'V', 5,
-        'X', 10,
-        'L', 50,
-        'C', 100,
-        'D', 500,
-        'M', 1000
+public class ArabicToRoman {
+    public static final Map<Integer, Character> dictionary = Map.ofEntries(
+        entry(1, 'I'),
+        entry(5, 'V'),
+        entry(10, 'X'),
+        entry(50, 'L'),
+        entry(100, 'C'),
+        entry(500, 'D'),
+        entry(1000, 'M')
     );
 
     public static void main(String[] args) {
-        String input = "150".trim();
+        var input = "268";
+        System.out.println("Input: " + input);
+        System.out.println();
 
-        // abans de fer res, provar de buscar directament?, per exemple si es 100, doncs ja esta, C
+        // todo - check it's a valid integer and between 1 and 1000
+
+        // check if whole number is already a key
         if (dictionary.containsKey(Integer.parseInt(input))) {
             System.out.println(dictionary.get(Integer.parseInt(input)));
             return;
         }
 
-        /*
-         inputs a provar:
-          427 777 444 1515 5151 150
-         */
-
-        // 1- split
-
-        ArrayList<Integer> integers = new ArrayList<>();
+        // split the numbers and add zeros to them
+        var splittedNums = new ArrayList<Integer>();
 
         for (int i = 0; i < input.length(); i++) {
-            if (Integer.parseInt(input.charAt(i) + "0".repeat(input.length() - i - 1)) != 0) {
-                integers.add(Integer.parseInt(input.charAt(i) + "0".repeat(input.length() - i - 1)));
+            var num = Integer.parseInt(input.charAt(i) + "0".repeat(input.length() - i - 1));
+
+            // don't add zeros
+            if (num != 0) {
+                splittedNums.add(num);
             }
         }
 
-        // check if up or down
+        var convertedNums = new ArrayList<String>();
 
-        for (int i = 0; i < integers.size(); i++) {
-            // know if between 1x and 5x or 5x and 1x
-            var number = integers.get(i);
-            var firstCharAsInt = Integer.parseInt(String.valueOf(number.toString().charAt(0)));
-            var upperRomanNumber = getUpperRomanNumber(number);
-            var lowerRomanNumber = getLowerRomanNumber(number);
+        for (Integer num : splittedNums) {
+            // if number isn't a key
+            if (!dictionary.containsKey(num)) {
+                var firstNumDigit = Integer.parseInt(String.valueOf(num.toString().charAt(0)));
 
-            if (firstCharAsInt == 4 || firstCharAsInt == 9) {
-                System.out.println(number);
+                // get num type range
+                var numTypeRange = getNumTypeRange(firstNumDigit);
 
-                System.out.println(
-                    (dictionary.get(romanToArabic.get(upperRomanNumber) - number)).toString()
-                    +
-                    upperRomanNumber.toString()
-                );
+                // get num range
+                var numRange = getNumRange(num, firstNumDigit);
+                var firstNumRangeDigit = Integer.parseInt(String.valueOf(numRange.toString().charAt(0)));
+
+                if (numTypeRange.equals("lower")) {
+                    var timesToBeRepeated = firstNumDigit - firstNumRangeDigit;
+
+                    // get next num range from current num range if num is 3X or 2X
+                    if (firstNumDigit != 3 && firstNumDigit != 2) {
+                        var subNumRange = getNumRange(numRange, firstNumRangeDigit);
+
+                        var subNumRangeAsRoman = dictionary.get(subNumRange);
+
+                        // repeat num n times
+                        var subNumRangeAsRomanRepeated = subNumRangeAsRoman.toString().repeat(timesToBeRepeated);
+
+                        convertedNums.add(dictionary.get(numRange).toString());
+
+                        convertedNums.add(subNumRangeAsRomanRepeated);
+                    } else {
+                        var numRangeAsRoman = dictionary.get(numRange);
+
+                        // repeat num n times
+                        var numRangeAsRomanRepeated = numRangeAsRoman.toString().repeat(firstNumDigit);
+
+                        convertedNums.add(numRangeAsRomanRepeated);
+                    }
+
+                    // put it together
+
+                } else {
+
+                }
             } else {
-                System.out.println(number);
-                System.out.println("b");
-
-                System.out.println(
-                        lowerRomanNumber
-                        +
-                        dictionary.get(romanToArabic.get(getLowerRomanNumber(romanToArabic.get(lowerRomanNumber)))).toString().repeat(
-                    firstCharAsInt
-                            -
-                            Integer.parseInt(String.valueOf(romanToArabic.get(lowerRomanNumber).toString().charAt(0)))
-
-                        )
-                );
+                convertedNums.add(String.valueOf(dictionary.get(num)));
             }
-            System.out.println();
-
         }
+
+        System.out.println(convertedNums);
+
+        convertedNums.forEach(System.out::print);
         System.out.println();
     }
 
-    private static Character getUpperRomanNumber(int num) {
-        if (num >= 500) {
-            return dictionary.get(1000);
+    /**
+     * Gets the range where parsed num belongs to.
+     * Number has "lower" range if is not 4x or 9x,
+     * those two are generated by subtracting, and they belong to "upper" range.
+     */
+    private static Integer getNumRange(int num, int firstNumDigit) {
+        if (firstNumDigit == 4 || firstNumDigit == 9) {
+            // upper range
+            if (num >= 500) {
+                return 1000;
+            }
+
+            if (num >= 100) {
+                return 500;
+            }
+
+            if (num >= 50) {
+                return 100;
+            }
+
+            if (num >= 10) {
+                return 50;
+            }
+
+            if (num >= 5) {
+                return 10;
+            }
+
+            if (num >= 1) {
+                return 5;
+            }
+
+            return 1;
         }
 
-        if (num >= 100) {
-            return dictionary.get(500);
-        }
-
-        if (num >= 50) {
-            return dictionary.get(100);
-        }
-
-        if (num >= 10) {
-            return dictionary.get(50);
-        }
-
-        if (num >= 5) {
-            return dictionary.get(10);
-        }
-
-        if (num >= 1) {
-            return dictionary.get(5);
-        }
-
-        return dictionary.get(1);
-    }
-
-    private static Character getLowerRomanNumber(int num) {
+        // lower range
         if (num <= 5) {
-            return dictionary.get(1);
+            return 1;
         }
 
         if (num <= 10) {
-            return dictionary.get(5);
+            return 5;
         }
 
         if (num <= 50) {
-            return dictionary.get(10);
+            return 10;
         }
 
         if (num <= 100) {
-            return dictionary.get(50);
+            return 50;
         }
 
         if (num <= 500) {
-            return dictionary.get(100);
+            return 100;
         }
 
         if (num <= 1000) {
-            return dictionary.get(500);
+            return 500;
         }
 
-        return dictionary.get(1000);
+        return 1000;
+    }
+
+    private static String getNumTypeRange(int firstNumDigit) {
+        if (firstNumDigit == 4 || firstNumDigit == 9) {
+            return "upper";
+        }
+
+        return "lower";
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
