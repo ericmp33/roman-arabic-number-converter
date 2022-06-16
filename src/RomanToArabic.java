@@ -75,17 +75,21 @@ public class RomanToArabic {
         'M', 1000
     );
 
-    public static void main(String[] args) {
-        // get input
-        String input = "CDXLIV".trim().toUpperCase();
+    private RomanToArabic() {}
 
-        // todo - casos a controlar - iix, XXC
-
-        // validate input
-        if (! isValidRomanNumber(input)) {
-            System.out.println("invalid Roman number");
-            return;
+    public static String validate(String input) {
+        if (! input.equals("") && isValidRomanNumber(input)) {
+            return input;
         }
+
+        // todo - still cases to control - iix, XXC, xixiix, check validation logic
+
+        // todo - in this case says invalid input, lol? - LXXXIX
+
+        return "failed";
+    }
+
+    public static String convert(String input) {
 
         // convert each Roman number to integer and store it in an array (but reversed)
         ArrayList<Integer> integers = new ArrayList<>();
@@ -112,8 +116,10 @@ public class RomanToArabic {
             }
         }
 
-        System.out.println(outputTest);
-        System.out.println(output);
+        //System.out.println(outputTest);
+//        System.out.println(output);
+
+        return String.valueOf(output);
     }
 
     // returns true if parsed String is a valid Roman number

@@ -14,16 +14,22 @@ public class ArabicToRoman {
         entry(1000, 'M')
     );
 
-    public static void main(String[] args) {
-        var input = "740";
-        System.out.println("Input: " + input);
+    private ArabicToRoman() {}
 
-        // todo - check it's a valid integer and between 1 and 1000
-
+    public static String validate(String input) {
+        var inputAsInt = Integer.parseInt(input);
+        
+        if (inputAsInt >= 1 && inputAsInt <= 1000) {
+            return input;
+        }
+        
+        return "failed";
+    }
+    
+    public static String convert(String input) {
         // check if whole number is already a key
         if (dictionary.containsKey(Integer.parseInt(input))) {
-            System.out.println(dictionary.get(Integer.parseInt(input)));
-            return;
+            return dictionary.get(Integer.parseInt(input)).toString();
         }
 
         // split the numbers and add zeros to them
@@ -96,9 +102,13 @@ public class ArabicToRoman {
             }
         }
 
-        System.out.print("Output: ");
-        convertedNums.forEach(System.out::print);
-        System.out.println();
+        StringBuilder output = new StringBuilder();
+
+        for (String convertedNum : convertedNums) {
+            output.append(convertedNum);
+        }
+
+        return output.toString();
     }
 
     /**
