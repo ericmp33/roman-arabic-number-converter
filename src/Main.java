@@ -2,7 +2,7 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        var line = "-----------------------------------------------------------------";
+        var line = "-------------------------------------------------------------";
 
         // print welcome text
         System.out.println(line);

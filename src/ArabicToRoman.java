@@ -1,17 +1,15 @@
 import java.util.ArrayList;
 import java.util.Map;
 
-import static java.util.Map.entry;
-
 public class ArabicToRoman {
     public static final Map<Integer, Character> dictionary = Map.ofEntries(
-        entry(1, 'I'),
-        entry(5, 'V'),
-        entry(10, 'X'),
-        entry(50, 'L'),
-        entry(100, 'C'),
-        entry(500, 'D'),
-        entry(1000, 'M')
+        Map.entry(1, 'I'),
+        Map.entry(5, 'V'),
+        Map.entry(10, 'X'),
+        Map.entry(50, 'L'),
+        Map.entry(100, 'C'),
+        Map.entry(500, 'D'),
+        Map.entry(1000, 'M')
     );
 
     private ArabicToRoman() {}
