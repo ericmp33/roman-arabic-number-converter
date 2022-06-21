@@ -78,19 +78,25 @@ public class RomanToArabic {
     private RomanToArabic() {}
 
     public static String validate(String input) {
+        if (! isComposedByRomanNumbers(input)) {
+            return "failed";
+        }
+
+
+        return input;
+        /*
         if (! input.equals("") && isValidRomanNumber(input)) {
             return input;
         }
 
         // todo - still cases to control - iix, XXC, xixiix, check validation logic
 
-        // todo - in this case says invalid input, lol? - LXXXIX
+        // todo - in this cases says invalid input, lol? - LXXXIX, CDLXXXIX
 
-        return "failed";
+        return "failed";*/
     }
 
     public static String convert(String input) {
-
         // convert each Roman number to integer and store it in an array (but reversed)
         ArrayList<Integer> integers = new ArrayList<>();
 
@@ -100,7 +106,6 @@ public class RomanToArabic {
 
         // build the output
         int output = integers.get(0);
-        StringBuilder outputTest = new StringBuilder(String.valueOf(integers.get(0)));
 
         for (int i = 0; i < integers.size() - 1; i++) {
             int current = integers.get(i);
@@ -108,12 +113,18 @@ public class RomanToArabic {
 
             // if current number is greater than next one, subtract, otherwise, sum
             if (current > next) {
-                outputTest.append(" - ").append(next);
                 output -= next;
             } else {
-                outputTest.append(" + ").append(next);
                 output += next;
             }
+        }
+
+        // lifehack-trick to do reverse validation looool !?
+// todo: make a test to try to get all numbers translated, from 1 to 1000, and from roman to arabic and from arabic to roman
+        var test = ArabicToRoman.convert(String.valueOf(output));
+
+        if (! test.equals(input)) {
+            return "Invalid input";
         }
 
         //System.out.println(outputTest);
@@ -129,6 +140,8 @@ public class RomanToArabic {
 
     // returns true if parsed String is only composed by roman numbers
     private static boolean isComposedByRomanNumbers(String str) {
+        if (str.isEmpty()) return false;
+
         for (int i = 0; i < str.length(); i++) {
             if (! dictionary.containsKey(str.charAt(i))) {
                 return false;
