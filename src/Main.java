@@ -17,7 +17,7 @@ public class Main {
             // retrieve user input
             var input = sc.nextLine().trim().toUpperCase();
 
-            if (input.equals("0")) {
+            if (input.equalsIgnoreCase("0") || input.equalsIgnoreCase("exit") || input.equalsIgnoreCase("-1")) {
                 System.out.println(line);
                 return;
             }

@@ -23,7 +23,12 @@ public class ArabicToRoman {
         
         return "failed";
     }
-    
+
+    /**
+     * todo - add docblocks to all methods and refactor method
+     * @param input
+     * @return
+     */
     public static String convert(String input) {
         // if whole number is already a key
         if (dictionary.containsKey(Integer.parseInt(input))) {
