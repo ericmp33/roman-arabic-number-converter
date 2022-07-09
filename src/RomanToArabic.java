@@ -46,7 +46,6 @@ public class RomanToArabic {
         }
 
         // lifehack-trick to do reverse validation looool !? it actually works yeah!
-// todo: make a test to try to get all numbers translated, from 1 to 1000, and from roman to arabic and from arabic to roman
         var test = ArabicToRoman.convert(String.valueOf(output));
 
         if (! test.equals(input)) {
