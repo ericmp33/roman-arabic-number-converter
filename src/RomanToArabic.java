@@ -45,10 +45,8 @@ public class RomanToArabic {
             }
         }
 
-        // lifehack-trick to do reverse validation looool !? it actually works yeah!
-        var test = ArabicToRoman.convert(String.valueOf(output));
-
-        if (! test.equals(input)) {
+        // trick to do reverse validation
+        if (! ArabicToRoman.convert(String.valueOf(output)).equals(input)) {
             return "Invalid input";
         }
 

@@ -2,13 +2,13 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        var line = "-------------------------------------------------------------";
-
-        System.out.println(line);
-        System.out.println("Roman to Arabic / Arabic to Roman number converter");
-        System.out.println(line);
-        System.out.println("Input numbers between 1 and 1000 (Roman or Arabic format)");
-        System.out.println("Type \"-1\" to exit, \"test\" to test all 1000 numbers");
+        System.out.println("""
+                -------------------------------------------------------------
+                Roman to Arabic / Arabic to Roman number converter
+                -------------------------------------------------------------
+                Input numbers between 1 and 1000 (Roman or Arabic format)
+                Type "-1" to exit, "test" to test all 1000 numbers
+                """);
 
         var sc = new Scanner(System.in);
 
@@ -20,7 +20,6 @@ public class Main {
 
             // exit condition
             if (input.equalsIgnoreCase("-1")) {
-                System.out.println("bye");
                 return;
             }
 
@@ -63,7 +62,7 @@ public class Main {
         }
     }
 
-    // checks if all numbers (from 1 to 1000) are converted successfully, from arabic to roman, and then from roman to arabic
+    // checks if all numbers (from 1 to 1000) are converted successfully, from arabic to roman and from roman to arabic
     public static void testAllNumbersAreConvertedSuccessfully() {
         // convert all the numbers (from 1 to 1000), and check conversions
         var error = false;

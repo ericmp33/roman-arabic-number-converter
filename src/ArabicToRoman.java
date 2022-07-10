@@ -24,11 +24,6 @@ public class ArabicToRoman {
         return "failed";
     }
 
-    /**
-     * todo - add docblocks to all methods and refactor method
-     * @param input
-     * @return
-     */
     public static String convert(String input) {
         // if whole number is already a key
         if (dictionary.containsKey(Integer.parseInt(input))) {
@@ -52,54 +47,7 @@ public class ArabicToRoman {
         for (Integer num : splittedNums) {
             // if number isn't a key
             if (!dictionary.containsKey(num)) {
-                var firstNumDigit = Integer.parseInt(String.valueOf(num.toString().charAt(0)));
-
-                // get num type range
-                var numTypeRange = getNumTypeRange(firstNumDigit);
-
-                // get num range
-                var numRange = getNumRange(num, firstNumDigit);
-                var firstNumRangeDigit = Integer.parseInt(String.valueOf(numRange.toString().charAt(0)));
-
-                // handle lower ranges
-                if (numTypeRange.equals("lower")) {
-                    var timesToBeRepeated = firstNumDigit - firstNumRangeDigit;
-
-                    // get next num range from current num range if num is 3X or 2X
-                    if (firstNumDigit != 3 && firstNumDigit != 2) {
-                        var subNumRange = getNumRange(numRange, firstNumRangeDigit);
-
-                        var subNumRangeAsRoman = dictionary.get(subNumRange);
-
-                        // repeat num n times
-                        var subNumRangeAsRomanRepeated = subNumRangeAsRoman.toString().repeat(timesToBeRepeated);
-
-                        convertedNums.add(dictionary.get(numRange).toString());
-
-                        convertedNums.add(subNumRangeAsRomanRepeated);
-                    } else {
-                        var numRangeAsRoman = dictionary.get(numRange);
-
-                        // repeat num n times
-                        var numRangeAsRomanRepeated = numRangeAsRoman.toString().repeat(firstNumDigit);
-
-                        convertedNums.add(numRangeAsRomanRepeated);
-                    }
-                }
-
-                // handle upper ranges
-                else {
-                    // convert upper range
-                    var numRangeAsRoman = dictionary.get(numRange);
-
-                    var subtract = numRange - num;
-
-                    var subtractAsRoman = dictionary.get(subtract);
-
-                    var numAsRoman = subtractAsRoman.toString() + numRangeAsRoman.toString();
-
-                    convertedNums.add(numAsRoman);
-                }
+                convertedNums.addAll(convertCurrentIndex(num));
             } else {
                 convertedNums.add(String.valueOf(dictionary.get(num)));
             }
@@ -112,6 +60,61 @@ public class ArabicToRoman {
         }
 
         return output.toString();
+    }
+
+    private static ArrayList<String> convertCurrentIndex(Integer num) {
+        var convertedNums = new ArrayList<String>();
+
+        var firstNumDigit = Integer.parseInt(String.valueOf(num.toString().charAt(0)));
+
+        // get num type range
+        var numTypeRange = getNumTypeRange(firstNumDigit);
+
+        // get num range
+        var numRange = getNumRange(num, firstNumDigit);
+        var firstNumRangeDigit = Integer.parseInt(String.valueOf(numRange.toString().charAt(0)));
+
+        // handle lower ranges
+        if (numTypeRange.equals("lower")) {
+            var timesToBeRepeated = firstNumDigit - firstNumRangeDigit;
+
+            // get next num range from current num range if num is 3X or 2X
+            if (firstNumDigit != 3 && firstNumDigit != 2) {
+                var subNumRange = getNumRange(numRange, firstNumRangeDigit);
+
+                var subNumRangeAsRoman = dictionary.get(subNumRange);
+
+                // repeat num n times
+                var subNumRangeAsRomanRepeated = subNumRangeAsRoman.toString().repeat(timesToBeRepeated);
+
+                convertedNums.add(dictionary.get(numRange).toString());
+
+                convertedNums.add(subNumRangeAsRomanRepeated);
+            } else {
+                var numRangeAsRoman = dictionary.get(numRange);
+
+                // repeat num n times
+                var numRangeAsRomanRepeated = numRangeAsRoman.toString().repeat(firstNumDigit);
+
+                convertedNums.add(numRangeAsRomanRepeated);
+            }
+        }
+
+        // handle upper ranges
+        else {
+            // convert upper range
+            var numRangeAsRoman = dictionary.get(numRange);
+
+            var subtract = numRange - num;
+
+            var subtractAsRoman = dictionary.get(subtract);
+
+            var numAsRoman = subtractAsRoman.toString() + numRangeAsRoman.toString();
+
+            convertedNums.add(numAsRoman);
+        }
+
+        return convertedNums;
     }
 
     /**
