@@ -34,8 +34,6 @@ public class RomanToArabic {
         return input;
     }
 
-    // returns true if parsed String is only composed by roman numbers
-
     /**
      * Helper method to do the validation.
      * Checks if parsed String is only composed by Roman numbers.

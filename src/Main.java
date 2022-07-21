@@ -64,7 +64,7 @@ public class Main {
     }
 
     /**
-     * Checks if all numbers (from 1 to 1000) are converted from Arabic to Roman and from Roman to Arabic successflly.
+     * Checks if all numbers (from 1 to 1000) are converted from Arabic to Roman and from Roman to Arabic successfully.
      */
     public static void testAllNumbersAreConvertedSuccessfully() {
         var error = false;
