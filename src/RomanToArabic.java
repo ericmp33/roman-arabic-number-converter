@@ -6,7 +6,7 @@ import java.util.Map;
  */
 public class RomanToArabic {
     /**
-     * Table of equivalences between Roman numbers and Arabic numbers
+     * Table of equivalences between Roman numbers and Arabic numbers.
      */
     public static final Map<Character, Integer> dictionary = Map.of(
         'I', 1,
@@ -60,11 +60,9 @@ public class RomanToArabic {
      * @return The converted Roman number as Arabic number, or "Invalid input"
      */
     public static String convert(String input) {
-        // convert each Roman number to integer and store it in an array (but reversed)
         ArrayList<Integer> integers = new ArrayList<>();
 
-        // todo - explain the conversion!
-
+        // convert each Roman number to integer and store it in an array (but reversed)
         for (int i = input.length() - 1; i >= 0; i--) {
             integers.add(dictionary.get(input.charAt(i)));
         }

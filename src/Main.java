@@ -34,7 +34,9 @@ public class Main {
                 } else {
                     System.out.println("Invalid input");
                 }
-            } else {
+            }
+
+            else {
                 // validate input and convert from Roman to Arabic
                 var validatedInput = RomanToArabic.validate(input);
 

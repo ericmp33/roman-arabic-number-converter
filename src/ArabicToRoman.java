@@ -6,7 +6,7 @@ import java.util.Map;
  */
 public class ArabicToRoman {
     /**
-     * Table of equivalences between Roman numbers and Arabic numbers
+     * Table of equivalences between Roman numbers and Arabic numbers.
      */
     public static final Map<Integer, Character> dictionary = Map.ofEntries(
         Map.entry(1, 'I'),
@@ -37,7 +37,11 @@ public class ArabicToRoman {
         return "failed";
     }
 
-    // todo - explain conversion
+    /**
+     * Converts Arabic number to Roman number.
+     * @param input Number to be converted
+     * @return The corresponding conversion
+     */
     public static String convert(String input) {
         // if whole number is already a key
         if (dictionary.containsKey(Integer.parseInt(input))) {
